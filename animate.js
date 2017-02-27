@@ -66,50 +66,55 @@ var dvd = function() {
     
     window.cancelAnimationFrame( requestID );
     
-    console.log(requestID);
+    //console.log(requestID);
 
     //init params for drawing rect
-    imagewidth = 100
-    imageheight = 50
+    var a = document.getElementById("image")
+    imagewidth = a.width
+    imageheight = a.height
     increasex = true
     increasey = true
-    var xcor = round((c.width - imagewidth)* Math.random())
-    var ycor = round((c.height - imageheight)* Math.random())
+    
+    xcor = Math.round((c.width - imagewidth)* Math.random())
+    ycor = Math.round((c.height - imageheight)* Math.random())
     var drawDot = function() {
-        console.log( requestID )
+        //console.log( requestID )
 
         ctx.clearRect( 0, 0, c.width, c.height );
         
         ctx.beginPath();
-        ctx.rect( xcor, ycor, imagewidth, imageheight);
+        ctx.drawImage( a, xcor, ycor,imagewidth,imageheight);
         ctx.stroke();
         ctx.fill();
-        if (xcor + imagewidth == ctx.width){
+
+        console.log(xcor)
+        
+        if (xcor + imagewidth >= c.width){
             increasex=false;
         }
 
-        if (xcor == 0){
+        if (xcor <= 0){
             increasex=true;
         }
 
-        if (ycor + imageheight == ctx.height){
+        if (ycor + imageheight >= c.height){
             increasey=false;
         }
 
-        if (ycor == 0){
+        if (ycor <= 0){
             increasey=true;
         }
 
         if (increasex){
-            x++;
+            xcor++;
         }else{
-            x--;
+            xcor--;
         }
 
         if (increasey){
-            y++;
+            ycor++;
         }else{
-            y--;
+            ycor--;
         }  
 
         requestID = window.requestAnimationFrame( drawDot );
